@@ -1,0 +1,49 @@
+version: 'v3'
+
+clusters:
+  daishan-gke:
+    driver: googleKubernetesEngine
+    googleKubernetesEngineConfig:
+      credential: |
+        {
+          "type": "service_account",
+          "project_id": "rancher-dev",
+          "private_key_id": "5365ad6671541447a711810190d9387d3686a180",
+          "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDMM3o7BWtM7w8v\nDbpQSAoSQHmSqT7u9E3HCI+UGAmDAlnL1uiz+fZIwK7piEU1g4qOAsTYEgpMp83f\nQjp1CcJuzdPMCFyIsrgSJVXK6CMtMJDmSRM7w9imiNmguVKFE7VmkGh5zeutnAZ4\nVVl5i31Z4yAmVkdu0VgdZlbO+FvMMT9WnTlLQ2xgfBzvXPEOo4fZVNoaR28mH7Fn\nm0wtfcgrMCPPnrMkvSjWsg0QmdASNALraLtrTPQiUmHGErKzJOvYHZlNp4CDCYLV\n9ny8yxueGyck7DwU6LrgqDaQ18lt4oZ6b2HFvEXGwWb4mxlmALpYO5mcVSd0vXLm\nrWkULHQJAgMBAAECggEABObM7a8B/fskiwl6MgxiooDF8ktp+XAnkEogMSq5Croj\nF+mhFRXgT6uBX1VwLNpLGIDQQwv+z4t9HXlwYAgTkNeTuItwVi8tDDF1e10CYCaw\n6bgyFB6NvCSfjbQ5Gvznvy4i9d6HpFeRD7EjyE88+2wAZO8wAITZp74Bwi7TvEVc\n1jlXKysbBi0NcJ0BKFOcoH0HQZi5QQv+Q7blF/YiyyLGLNVi6FVAe8WayihjW9rB\nWVbDpjtGfPO7PsX5M/p4i3086oM3KJ3ZPpl0uCBtra9CYv6qlMd50ItWbAof0K3c\nj/BmiLSNAnXRX8UZoag2XzLJkjbzFoAF05em/nAfoQKBgQD5j9TOvuoSdoTyOsB/\nCe6EG4ivwY/0a+RS5biCWk3YMcENJw6aMRWSJ3qH9OcUyaAMmYo1ejAAsAJGCdp8\nEWEaPDnBwQA3kaSbsDkBIXC36MtEhWCBNaxSfPpY2m7Q3IEOMAiEOPm6yoAtG+uz\nPHDFpMqtsb+sRX1TcH9PKBsTIQKBgQDReBKJ1RELwY3w2N54mIwYP/WAJdM6uq4L\nqaC/9ldMOGaYmpk2ROTJMF9HJTrVxQKBpRv6MfmAF7IaT3+YoCZkCOqCVoslFmox\nqt05muGsSg9+AztTyg0OsxvmURSjPwd6zgS91x2EQB9StI4i2b8k0tKek7OEbYn9\nzDqTtqGr6QKBgAHfno1eyYsR8LWQ01kgzfWX71LCdT40gSZOKzBvVR5GYVij7mwh\n6jOKsFTM9d8mFFmD3ZHBNRMMPzgfYtCDoOL9iMF3nXTNVxsEG6lygtIeoUgGaE8Q\nBBcqcQaxvRs8TIu6uJWlh9prIsMz7nUOAxq4vfzH1NSKQQKbWZlSh8GBAoGAXG5G\nh+msHurm7mtUKBTwZNb8RvLp9ZVgrabJV0ulk+2jYB2AFBFsf1bIBEXqY2AOzhSE\ndu/Mb/iEz9VasYehySyiBqeXuOLeM1J5Ui0E/hikI2/bowqanmzsl8IZgDuU2lzE\nfNzKmowNBlrECZ7aGK6q3+y/H2WSqZqQEpRZXNkCgYAG4ALjzIrGyTaiiM8RwwKK\nUuVTjO6iD/Jb1iiVqOWkoXBCRWXbEQb590fhdSg20rOcEIk6LsJA6rEfw9sCTNjN\n36yf+31AZxJYH3YBjlZXvIv/qi1OlZb1edoF/JYGTPuIprME+YcxFoAtOMurFG55\ndZwNs96QbGvkP3v+PMHTYw==\n-----END PRIVATE KEY-----\n",
+          "client_email": "daishan@rancher-dev.iam.gserviceaccount.com",
+          "client_id": "103481237645081400520",
+          "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+          "token_uri": "https://accounts.google.com/o/oauth2/token",
+          "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+          "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/daishan%40rancher-dev.iam.gserviceaccount.com"
+        }
+      nodeCount: 1
+      masterVersion: 1.8.7-gke.1
+      projectId: rancher-dev
+      zone: us-central1-f
+
+projects:
+  daishan-test-1:
+    clusterId: daishan-gke
+
+namespaces:
+  daishan2:
+    projectId: daishan-gke:daishan-test-1
+
+users:
+  daishan1:
+    username: daishan1
+    password: daishan1
+
+globalRoleBindings:
+  binding1:
+    globalRoleId: user
+    userId: daishan1
+
+catalogs:
+  helm:
+    kind: helm
+    url: https://kubernetes-charts.storage.googleapis.com/
+
+
+
